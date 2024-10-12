@@ -7,7 +7,7 @@ export const Backdrop = styled.div`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 999;
+  z-index: 100;
 `;
 
 export const PopoverRoot = styled.div<{ top: number; left: number }>`
@@ -16,7 +16,7 @@ export const PopoverRoot = styled.div<{ top: number; left: number }>`
   left: ${(p) => p.left}px;
   background-color: white;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-  padding: 20px;
   border-radius: 4px;
   z-index: 1000;
+  overflow: hidden;
 `;

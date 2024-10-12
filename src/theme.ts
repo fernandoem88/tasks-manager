@@ -1,7 +1,7 @@
 import { css } from "styled-components";
 import { Interpolation, RuleSet, Styles } from "styled-components/dist/types";
 
-export const breakpoints = {
+export const BREAK_POINTS = {
   xs: { min: 0, max: 380 },
   sm: { min: 381, max: 576 },
   md: { min: 577, max: 768 },
@@ -10,7 +10,7 @@ export const breakpoints = {
   xxl: { min: 1200, max: undefined },
 };
 
-export const fontSizes = {
+export const FONT_SIZES = {
   caption: 8,
   body1: 14,
   body2: 12,
@@ -19,26 +19,26 @@ export const fontSizes = {
   h6: 24,
 };
 
-export const palette = {
+export const PALETTE = {
   grey: {
     100: "#f4f4f4",
     200: "#d4d4d4",
     300: "#c4c4c4",
   },
   primary: {
-    main: "",
-    light: "",
-    dark: "",
+    main: "#7b28ae",
+    light: "#bb6dd1",
+    dark: "#471c98",
   },
   secondary: {
-    main: "",
-    light: "",
-    dark: "",
+    main: "#e3a730",
+    light: "#ffcc39",
+    dark: "#a66d24",
   },
   warning: {
-    main: "",
-    light: "",
-    dark: "",
+    main: "#e76632",
+    light: "#ec906e",
+    dark: "#a64824",
   },
 } as const;
 
@@ -59,9 +59,9 @@ export const palette = {
 //   {} as Record<Breakpoint, Media>
 // );
 
-export const media = {
+export const MEDIA = {
   up: (key: Breakpoint) => {
-    const { min } = breakpoints[key];
+    const { min } = BREAK_POINTS[key];
     const mediaQuery: Media = (...args) => {
       if (!min) {
         return css(...args);
@@ -76,7 +76,7 @@ export const media = {
     return mediaQuery;
   },
   down: (key: Breakpoint) => {
-    const { max } = breakpoints[key];
+    const { max } = BREAK_POINTS[key];
     const mediaQuery: Media = (...args) => {
       if (!max) {
         return css(...args);
@@ -92,7 +92,7 @@ export const media = {
   },
 };
 
-export type Breakpoint = keyof typeof breakpoints;
+export type Breakpoint = keyof typeof BREAK_POINTS;
 export type Media = (
   styles: Styles<object>,
   ...interpolations: Interpolation<object>[]

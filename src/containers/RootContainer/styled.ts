@@ -1,4 +1,4 @@
-import { palette } from "@/theme";
+import { PALETTE } from "@/theme";
 import styled from "styled-components";
 
 export const AppRoot = styled.main`
@@ -10,9 +10,14 @@ export const AppRoot = styled.main`
 
 export const AppHeader = styled.header`
   height: 48px;
-  border-bottom: solid 1px ${palette.grey["300"]};
+  border-bottom: solid 1px ${PALETTE.grey["300"]};
   position: sticky;
   top: 0;
   background-color: white;
   backdrop-filter: blur(3px);
+`;
+
+export const AppContent = styled.section`
+  height: 100%;
+  border: solid 1px red;
 `;
