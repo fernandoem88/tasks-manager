@@ -1,15 +1,15 @@
 import type { Board } from "@/types";
-import { BoardName, Root } from "./styled";
+import { BoardName, ButtonWrapper, Root } from "./styled";
 import { UiPopover } from "@/ui/Popover";
 import { useRef, useState } from "react";
 import { UiListItem } from "@/ui/ListItem";
 import { UiButton } from "@/ui/Button";
 
 interface Props {
-  onSelect: (id: number) => void;
-  boards: (number | string)[];
-  getBoard: (id: number) => Board;
-  selectedId?: number;
+  onSelect: (id: string) => void;
+  boards: string[];
+  getBoard: (id: string) => Board;
+  selectedId?: string;
   onNewBoard?: () => void;
 }
 
@@ -32,7 +32,7 @@ export const BoardHeader = ({
   };
 
   const handleCloseBoardsList = () => setIsBoardsListOpen(false);
-  const handleSelect = (id: number, event: any) => {
+  const handleSelect = (id: string, event: any) => {
     event.stopPropagation();
     event.preventDefault();
     onSelect(id);
@@ -53,7 +53,9 @@ export const BoardHeader = ({
           &#9660;
         </UiButton>
       )}
-      <UiButton onClick={onNewBoard}>Add +</UiButton>
+      <ButtonWrapper>
+        <UiButton onClick={onNewBoard}>new board +</UiButton>
+      </ButtonWrapper>
       <UiPopover
         anchorEl={popoverAnchorRef.current}
         open={isBoardsListOpen}
@@ -61,7 +63,7 @@ export const BoardHeader = ({
       >
         <ul>
           {boards.map((boardId, index, array) => {
-            const board = getBoard(+boardId);
+            const board = getBoard(boardId);
             if (!board) return null;
             return (
               <UiListItem

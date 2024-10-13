@@ -1,71 +1,83 @@
+"use client";
+
 import { BoardHeader } from "@/components/BoardHeader";
 import { useState } from "react";
-import { Root, TasksRoot } from "./styled";
-import { Board } from "@/types";
+import { Root, BoardContent } from "./styled";
 import { CarouselActions } from "@/components/CarouselActions";
 import { useCarousel } from "@/ui/Carousel/hooks/useCarousel";
 import { UiCarousel, UiCarouselCard } from "@/ui/Carousel";
-
-interface Step {
-  id: number;
-  name: string;
-  tasks: number[];
-}
-
-interface AppState {
-  boards: Record<number, Board>;
-  steps: Record<number, Step>;
-}
-
-const appState: AppState = {
-  boards: {
-    1: { id: 1, name: "Board 1", steps: [1, 2] },
-    2: { id: 2, name: "Board 2", steps: [] },
-  },
-  steps: {
-    1: { id: 1, name: "Todo", tasks: [] },
-    2: { id: 2, name: "Doing", tasks: [] },
-  },
-};
+import { useAppState } from "@/contexts/AppStateProvider";
+import { EmptyBoard } from "@/components/EmptyBoard";
+import { UiModalPaper } from "@/ui/ModalPaper";
+import { BoardForm } from "@/components/BoardCreatorForm";
+import { useDispatch } from "@/contexts/AppStateProvider/hooks/useDispatch";
 
 export const BoardContainer = () => {
-  const [selectedId, setSelectedId] = useState(0);
+  const { boards, columns } = useAppState();
+  const [isBoardCreatorOpen, setIsBoardCreatorOpen] = useState(false);
+  const dispatch = useDispatch();
+  const [selectedId, setSelectedId] = useState("");
   const { anchorRef, isNextDisabled, isPreviousDisabled, navigation } =
     useCarousel();
 
-  const selectedBoard = appState.boards[selectedId];
+  const selectedBoard = boards[selectedId];
+
+  const handleConfirm = (name: string) => {
+    const newBoard = dispatch("newBoard", name);
+    setIsBoardCreatorOpen(false);
+  };
+
   return (
     <Root>
-      <BoardHeader
-        selectedId={selectedId}
-        boards={Object.keys(appState.boards)}
-        getBoard={(boardId) => appState.boards[boardId]}
-        onSelect={setSelectedId}
-      />
-      <TasksRoot>
-        <CarouselActions
-          onNext={navigation.next}
-          onPrevious={navigation.prev}
-          isNextDisabled={isNextDisabled}
-          isPreviousDisabled={isPreviousDisabled}
+      {!selectedBoard && (
+        <EmptyBoard
+          boards={Object.keys(boards)}
+          getBoard={(boardId) => boards[boardId]}
+          onCreate={() => setIsBoardCreatorOpen(true)}
+          onSelect={(boardId) => setSelectedId(boardId)}
         />
-        <UiCarousel gap="12px">
-          {selectedBoard?.steps.map((stepId) => {
-            const step = appState.steps[stepId];
+      )}
+      {!!selectedBoard && (
+        <>
+          <BoardHeader
+            selectedId={selectedId}
+            boards={Object.keys(boards)}
+            getBoard={(boardId) => boards[boardId]}
+            onSelect={setSelectedId}
+            onNewBoard={() => setIsBoardCreatorOpen(true)}
+          />
+          <BoardContent>
+            <CarouselActions
+              onNext={navigation.next}
+              onPrevious={navigation.prev}
+              isNextDisabled={isNextDisabled}
+              isPreviousDisabled={isPreviousDisabled}
+            />
+            <UiCarousel gap="12px" ref={anchorRef}>
+              {selectedBoard?.columnIds.map((columnId) => {
+                const column = columns[columnId];
 
-            if (!step) return null;
+                if (!column) return null;
 
-            return (
-              <UiCarouselCard
-                key={stepId}
-                width={{ xs: "100%", sm: "75%", md: "240px" }}
-              >
-                <div>{step.name}</div>
-              </UiCarouselCard>
-            );
-          })}
-        </UiCarousel>
-      </TasksRoot>
+                return (
+                  <UiCarouselCard
+                    key={columnId}
+                    width={{ xs: "100%", sm: "75%", md: "240px" }}
+                  >
+                    <div>{column.name}</div>
+                  </UiCarouselCard>
+                );
+              })}
+            </UiCarousel>
+          </BoardContent>
+        </>
+      )}
+      <UiModalPaper
+        open={isBoardCreatorOpen}
+        onClose={() => setIsBoardCreatorOpen(false)}
+      >
+        <BoardForm onConfirm={handleConfirm} />
+      </UiModalPaper>
     </Root>
   );
 };

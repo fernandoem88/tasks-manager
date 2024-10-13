@@ -10,7 +10,7 @@ export const Root = styled.div`
   overflow: hidden;
 `;
 
-export const TasksRoot = styled.div`
+export const BoardContent = styled.div`
   height: 100%;
   display: grid;
   grid-template-rows: auto 1fr;
