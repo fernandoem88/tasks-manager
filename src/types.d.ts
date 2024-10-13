@@ -1,5 +1,26 @@
 export interface Board {
-  id: number;
+  id: string;
   name: string;
-  steps: number[];
+  columnIds: string[];
+}
+
+export interface BoardColumn {
+  id: string;
+  name: string;
+  boardId: string;
+  tasksIds: string[];
+}
+
+export interface Task {
+  id: string;
+  title: string;
+  description?: string;
+  createdAt: string;
+  history: string[];
+}
+
+export interface AppState {
+  boards: Record<string, Board>;
+  columns: Record<string, BoardColumn>;
+  tasks: Record<string>;
 }
