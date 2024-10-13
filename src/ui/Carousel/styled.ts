@@ -1,4 +1,4 @@
-import { MEDIA, type Breakpoint } from "@/theme";
+import { MEDIA, type Breakpoint } from "@/ui/theme";
 import styled, { css } from "styled-components";
 
 interface CardProps {

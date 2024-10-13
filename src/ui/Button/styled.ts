@@ -1,4 +1,4 @@
-import { FONT_SIZES, PALETTE } from "@/theme";
+import { FONT_SIZES, PALETTE } from "@/ui/theme";
 import styled, { css } from "styled-components";
 
 type Color = "primary" | "secondary" | "warning";
@@ -42,10 +42,14 @@ export const Root = styled.button.withConfig({
   box-shadow: 2px 2px 8px #ccc;
   transition: 0.2s;
   cursor: pointer;
-  &:active {
+  &:disabled {
+    cursor: not-allowed;
+  }
+  &:active,
+  &:disabled {
     box-shadow: none;
   }
-  &:hover {
+  &:hover:not(:disabled) {
     transform: translateY(-1px);
   }
   ${(p) => getStyle(p)}

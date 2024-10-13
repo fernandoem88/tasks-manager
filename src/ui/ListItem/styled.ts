@@ -1,9 +1,10 @@
-import { FONT_SIZES, PALETTE } from "@/theme";
+import { FONT_SIZES, PALETTE } from "@/ui/theme";
 import styled, { css } from "styled-components";
 
 export const Root = styled.div.withConfig({
   shouldForwardProp: (prop) => prop !== "divider",
 })<{ divider?: boolean }>`
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 8px;

@@ -4,12 +4,21 @@ import { type ButtonRootProps, Root } from "./styled";
 interface Props extends ButtonRootProps {
   children: ReactNode;
   onClick?: (e: any) => void;
+  disabled?: boolean;
 }
 
 export const UiButton = forwardRef(
-  ({ children, ...props }: Props, ref: ForwardedRef<any>) => {
+  (
+    { children, onClick, disabled, ...props }: Props,
+    ref: ForwardedRef<any>
+  ) => {
     return (
-      <Root {...props} ref={ref}>
+      <Root
+        {...props}
+        disabled={disabled}
+        ref={ref}
+        onClick={disabled ? undefined : onClick}
+      >
         {children}
       </Root>
     );

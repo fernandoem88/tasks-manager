@@ -25,9 +25,8 @@ export const Backdrop = styled.div<{ open: boolean }>`
   visibility: ${(p) => (p.open ? "visible" : "hidden")};
 `;
 
-export const ModalDialog = styled.div<{ open: boolean }>`
+export const ModalDialog = styled.section<{ open: boolean }>`
   background-color: white;
-  padding: 20px;
   border-radius: 4px;
   width: 500px;
   max-width: 90%;
@@ -35,4 +34,6 @@ export const ModalDialog = styled.div<{ open: boolean }>`
   transform: translateY(${(p) => (p.open ? "0" : "-20px")});
   opacity: ${(p) => (p.open ? "1" : "0")};
   transition: transform 0.3s ease, opacity 0.3s ease;
+  display: flex;
+  flex-direction: column;
 `;
