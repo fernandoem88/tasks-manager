@@ -1,4 +1,4 @@
-import { PALETTE } from "@/theme";
+import { PALETTE } from "@/ui/theme";
 import styled from "styled-components";
 
 export const AppRoot = styled.main`
