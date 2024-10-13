@@ -1,5 +1,6 @@
 import React from "react";
 import { Root } from "./styled";
+import { UiButton } from "@/ui/Button";
 
 interface Props {
   isNextDisabled?: boolean;
@@ -16,13 +17,13 @@ export const CarouselActions = ({
 }: Props) => {
   return (
     <Root>
-      <button onClick={onPrevious} disabled={isPreviousDisabled}>
+      <UiButton onClick={onPrevious} disabled={isPreviousDisabled}>
         &larr; Prev
-      </button>
+      </UiButton>
 
-      <button onClick={onNext} disabled={isNextDisabled}>
+      <UiButton onClick={onNext} disabled={isNextDisabled}>
         Next &rarr;
-      </button>
+      </UiButton>
     </Root>
   );
 };
