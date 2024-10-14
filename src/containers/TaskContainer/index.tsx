@@ -53,6 +53,7 @@ export const TaskContainer = ({ taskId }: Props) => {
           columnName={column.name}
           data={task}
           onConfirm={handleEditTask}
+          onClose={() => setIsTaskCreatorOpen(false)}
         />
       </UiModalPaper>
     </>

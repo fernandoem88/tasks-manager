@@ -25,8 +25,16 @@ export const BoardContainer = () => {
   const selectedBoard = boards[selectedId];
 
   const handleCreateBoard = (name: string) => {
-    dispatch("newBoard", name);
+    const newState = dispatch("newBoard", name);
+
     setIsBoardCreatorOpen(false);
+
+    const boardIds = Object.keys(newState?.boards ?? {});
+    const isFirstBoard = boardIds.length === 1;
+
+    if (!isFirstBoard) return;
+
+    setSelectedId(boardIds[0]);
   };
 
   const handleCreateColumn = (name: string) => {
@@ -38,13 +46,9 @@ export const BoardContainer = () => {
   return (
     <Root>
       {!selectedBoard && (
-        <EmptyBoard
-          boards={Object.keys(boards)}
-          getBoard={(boardId) => boards[boardId]}
-          onCreate={() => setIsBoardCreatorOpen(true)}
-          onSelect={(boardId) => setSelectedId(boardId)}
-        />
+        <EmptyBoard onCreate={() => setIsBoardCreatorOpen(true)} />
       )}
+
       {!!selectedBoard && (
         <>
           <BoardHeader
@@ -63,7 +67,7 @@ export const BoardContainer = () => {
               isPreviousDisabled={isPreviousDisabled}
             /> */}
             <UiCarousel gap="12px" ref={anchorRef}>
-              {selectedBoard?.columnIds.map((columnId, index) => {
+              {selectedBoard?.columnIds.map((columnId) => {
                 return (
                   <BoardColumnContainer key={columnId} columnId={columnId} />
                 );
@@ -72,6 +76,7 @@ export const BoardContainer = () => {
           </BoardContent>
         </>
       )}
+
       <UiModalPaper
         open={isBoardCreatorOpen}
         onClose={() => setIsBoardCreatorOpen(false)}

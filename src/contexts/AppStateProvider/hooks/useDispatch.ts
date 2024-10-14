@@ -26,7 +26,7 @@ export const useDispatch = () => {
     });
 
     setState(newState);
-    return board;
+    return newState;
   };
 
   const handleEditBoardName = ({
