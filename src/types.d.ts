@@ -13,7 +13,7 @@ export interface BoardColumn {
 
 export interface Task {
   id: string;
-  title: string;
+  name: string;
   columnId: string;
   description?: string;
   createdAt: string;
