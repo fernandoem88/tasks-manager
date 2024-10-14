@@ -9,11 +9,11 @@ export const CarouselRoot = styled.div<{ gap?: string }>`
   display: block;
   white-space: nowrap;
   overflow-x: scroll;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   max-width: 100%;
   -webkit-overflow-scrolling: touch;
-  border: solid 1px red;
   & > *:not(:first-of-type) {
     margin-left: ${(p) => p.gap || "0px"};
   }
@@ -50,10 +50,8 @@ export const CarouselCard = styled.div.withConfig({
   ${({ width }) => getWidth(width)};
   display: inline-block;
   scroll-snap-align: start;
-  padding: 10px;
   background: white;
   box-sizing: border-box;
   flex-grow: 1;
   height: 100%;
-  border: solid 1px;
 `;

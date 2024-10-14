@@ -20,12 +20,13 @@ export const Headline = styled.div`
 `;
 
 export const Title = styled.h6`
-  font-size: ${FONT_SIZES.h6}px;
+  font-size: ${FONT_SIZES.h6};
   white-space: pre-wrap;
 `;
 
 export const SubTitle = styled.span`
-  font-size: ${FONT_SIZES.caption};
+  font-size: ${FONT_SIZES.body1};
   display: block;
   white-space: pre-wrap;
+  color: ${PALETTE.grey[300]};
 `;

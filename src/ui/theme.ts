@@ -11,13 +11,13 @@ export const BREAK_POINTS = {
 };
 
 export const FONT_SIZES = {
-  caption: 8,
-  body1: 14,
-  body2: 12,
-  h1: 32,
-  h2: 28,
-  h6: 24,
-};
+  caption: "10px",
+  body1: "15px",
+  body2: "12px",
+  h1: "32px",
+  h2: "28px",
+  h6: "24px",
+} as const;
 
 export const PALETTE = {
   grey: {

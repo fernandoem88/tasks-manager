@@ -8,8 +8,15 @@ export interface ButtonRootProps {
   color?: Color;
   variant?: Variant;
   rounded?: boolean;
-  size?: "sm" | "md";
+  size?: "sm" | "md" | "lg";
+  noElevation?: boolean;
 }
+
+const BUTTON_SIZES = {
+  sm: FONT_SIZES.body2,
+  md: FONT_SIZES.body1,
+  lg: FONT_SIZES.h6,
+};
 
 const getStyle = ({ color, variant }: ButtonRootProps) => {
   if (variant === "contained") {
@@ -21,25 +28,30 @@ const getStyle = ({ color, variant }: ButtonRootProps) => {
   }
 
   return css`
-    border: solid 1px ${color ? PALETTE[color].main : undefined};
+    border: solid 1px ${color ? PALETTE[color].main : PALETTE.grey[200]};
   `;
 };
 
 export const Root = styled.button.withConfig({
-  shouldForwardProp: (prop) => prop !== "rounded",
+  shouldForwardProp: (prop) => !["rounded", "noElevation"].includes(prop),
 })<ButtonRootProps>`
   all: unset;
   outline: none !important;
-  color: #777;
+  color: #444;
   display: flex;
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
   padding: ${(p) => (p.rounded ? "4px" : "4px 8px")};
-  font-size: ${(p) =>
-    p.size === "sm" ? FONT_SIZES.caption : FONT_SIZES.body2};
+  font-size: ${({ size = "md" }) => BUTTON_SIZES[size]};
+  ${(p) =>
+    p.rounded &&
+    css`
+      width: 16px;
+      height: 16px;
+    `}
   border-radius: ${(p) => (p.rounded ? "50%" : "4px")};
-  box-shadow: 2px 2px 8px #ccc;
+  box-shadow: ${(p) => (p.noElevation ? "none" : "2px 2px 8px #ccc")};
   transition: 0.2s;
   cursor: pointer;
   &:disabled {

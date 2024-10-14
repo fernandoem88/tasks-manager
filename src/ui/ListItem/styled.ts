@@ -25,5 +25,5 @@ export const Root = styled.div.withConfig({
 
 export const Primary = styled.div`
   flex-grow: 1;
-  font-size: ${FONT_SIZES.body2};
+  font-size: ${FONT_SIZES.body1};
 `;

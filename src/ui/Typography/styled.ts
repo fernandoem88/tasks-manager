@@ -19,6 +19,8 @@ const getLineHeight = (variant: Variant = "body1") => {
 export const Root = styled.p.withConfig({
   shouldForwardProp: (prop) => prop !== "variant",
 })<{ variant?: Variant }>`
-  font-size: ${({ variant = "body1" }) => FONT_SIZES[variant]}px;
+  color: ${(p) => p.color ?? "#444"};
+  white-space: pre-wrap;
+  font-size: ${({ variant = "body1" }) => FONT_SIZES[variant]};
   line-height: ${(p) => getLineHeight(p.variant)};
 `;
