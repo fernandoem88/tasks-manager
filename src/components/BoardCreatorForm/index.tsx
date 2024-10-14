@@ -1,7 +1,5 @@
-import { Board } from "@/types";
-import { UiButton } from "@/ui/Button";
 import { useState } from "react";
-import { Root } from "./stled";
+import { Root } from "./styled";
 import { UiModalFooter } from "@/ui/ModalFooter";
 import { UiModalHeader } from "@/ui/ModalHeader";
 import { UiModalContent } from "@/ui/ModalContent";
@@ -33,6 +31,7 @@ export const BoardForm = ({ onClose, onConfirm, initialName = "" }: Props) => {
             request
           </UiTypography>
           <UiTextField
+            label="Board Name"
             value={boardName}
             onChange={(value) => setBoardName(value)}
           />
