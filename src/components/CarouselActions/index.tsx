@@ -17,12 +17,12 @@ export const CarouselActions = ({
 }: Props) => {
   return (
     <Root>
-      <UiButton onClick={onPrevious} disabled={isPreviousDisabled}>
-        &larr; Prev
+      <UiButton rounded onClick={onPrevious} disabled={isPreviousDisabled}>
+        &larr;
       </UiButton>
 
-      <UiButton onClick={onNext} disabled={isNextDisabled}>
-        Next &rarr;
+      <UiButton rounded onClick={onNext} disabled={isNextDisabled}>
+        &rarr;
       </UiButton>
     </Root>
   );

@@ -19,5 +19,4 @@ export const AppHeader = styled.header`
 
 export const AppContent = styled.section`
   height: 100%;
-  border: solid 1px red;
 `;

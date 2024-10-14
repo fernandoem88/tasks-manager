@@ -3,18 +3,20 @@
 import { BoardHeader } from "@/components/BoardHeader";
 import { useState } from "react";
 import { Root, BoardContent } from "./styled";
-import { CarouselActions } from "@/components/CarouselActions";
 import { useCarousel } from "@/ui/Carousel/hooks/useCarousel";
-import { UiCarousel, UiCarouselCard } from "@/ui/Carousel";
+import { UiCarousel } from "@/ui/Carousel";
 import { useAppState } from "@/contexts/AppStateProvider";
 import { EmptyBoard } from "@/components/EmptyBoard";
 import { UiModalPaper } from "@/ui/ModalPaper";
 import { BoardForm } from "@/components/BoardCreatorForm";
 import { useDispatch } from "@/contexts/AppStateProvider/hooks/useDispatch";
+import { BoardColumnContainer } from "../BoardColumnContainer";
+import { ColumnForm } from "@/components/ColumnForm";
 
 export const BoardContainer = () => {
-  const { boards, columns } = useAppState();
+  const { boards } = useAppState();
   const [isBoardCreatorOpen, setIsBoardCreatorOpen] = useState(false);
+  const [isColumnCreatorOpen, setIsColumnCreatorOpen] = useState(false);
   const dispatch = useDispatch();
   const [selectedId, setSelectedId] = useState("");
   const { anchorRef, isNextDisabled, isPreviousDisabled, navigation } =
@@ -22,9 +24,15 @@ export const BoardContainer = () => {
 
   const selectedBoard = boards[selectedId];
 
-  const handleConfirm = (name: string) => {
-    const newBoard = dispatch("newBoard", name);
+  const handleCreateBoard = (name: string) => {
+    dispatch("newBoard", name);
     setIsBoardCreatorOpen(false);
+  };
+
+  const handleCreateColumn = (name: string) => {
+    if (!selectedBoard) return;
+    dispatch("newBoardColumn", { boardId: selectedId, columnName: name });
+    setIsColumnCreatorOpen(false);
   };
 
   return (
@@ -45,27 +53,19 @@ export const BoardContainer = () => {
             getBoard={(boardId) => boards[boardId]}
             onSelect={setSelectedId}
             onNewBoard={() => setIsBoardCreatorOpen(true)}
+            onNewColumn={() => setIsColumnCreatorOpen(true)}
           />
           <BoardContent>
-            <CarouselActions
+            {/* <CarouselActions
               onNext={navigation.next}
               onPrevious={navigation.prev}
               isNextDisabled={isNextDisabled}
               isPreviousDisabled={isPreviousDisabled}
-            />
+            /> */}
             <UiCarousel gap="12px" ref={anchorRef}>
-              {selectedBoard?.columnIds.map((columnId) => {
-                const column = columns[columnId];
-
-                if (!column) return null;
-
+              {selectedBoard?.columnIds.map((columnId, index) => {
                 return (
-                  <UiCarouselCard
-                    key={columnId}
-                    width={{ xs: "100%", sm: "75%", md: "240px" }}
-                  >
-                    <div>{column.name}</div>
-                  </UiCarouselCard>
+                  <BoardColumnContainer key={columnId} columnId={columnId} />
                 );
               })}
             </UiCarousel>
@@ -76,8 +76,23 @@ export const BoardContainer = () => {
         open={isBoardCreatorOpen}
         onClose={() => setIsBoardCreatorOpen(false)}
       >
-        <BoardForm onConfirm={handleConfirm} />
+        <BoardForm
+          onConfirm={handleCreateBoard}
+          onClose={() => setIsBoardCreatorOpen(false)}
+        />
       </UiModalPaper>
+      {!!selectedBoard && (
+        <UiModalPaper
+          open={isColumnCreatorOpen}
+          onClose={() => setIsColumnCreatorOpen(false)}
+        >
+          <ColumnForm
+            onConfirm={handleCreateColumn}
+            onClose={() => setIsColumnCreatorOpen(false)}
+            boardName={selectedBoard.name}
+          />
+        </UiModalPaper>
+      )}
     </Root>
   );
 };

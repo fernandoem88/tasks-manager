@@ -4,6 +4,7 @@ import { UiPopover } from "@/ui/Popover";
 import { useRef, useState } from "react";
 import { UiListItem } from "@/ui/ListItem";
 import { UiButton } from "@/ui/Button";
+import { UiPencilIcon } from "@/ui/PencilIcon";
 
 interface Props {
   onSelect: (id: string) => void;
@@ -11,6 +12,7 @@ interface Props {
   getBoard: (id: string) => Board;
   selectedId?: string;
   onNewBoard?: () => void;
+  onNewColumn?: () => void;
 }
 
 export const BoardHeader = ({
@@ -18,6 +20,7 @@ export const BoardHeader = ({
   selectedId,
   onSelect,
   onNewBoard,
+  onNewColumn,
   getBoard,
 }: Props) => {
   const popoverAnchorRef = useRef(null);
@@ -41,6 +44,17 @@ export const BoardHeader = ({
   return (
     <Root>
       <BoardName>{boardName}</BoardName>
+      <UiButton
+        color="primary"
+        variant="contained"
+        rounded
+        onClick={() => {
+          // edit
+        }}
+        size="sm"
+      >
+        <UiPencilIcon />
+      </UiButton>
       {hasManyBoards && (
         <UiButton
           color="primary"
@@ -54,7 +68,12 @@ export const BoardHeader = ({
         </UiButton>
       )}
       <ButtonWrapper>
-        <UiButton onClick={onNewBoard}>new board +</UiButton>
+        <UiButton size="sm" onClick={onNewColumn}>
+          new column |||
+        </UiButton>
+        <UiButton size="sm" onClick={onNewBoard}>
+          new board +
+        </UiButton>
       </ButtonWrapper>
       <UiPopover
         anchorEl={popoverAnchorRef.current}

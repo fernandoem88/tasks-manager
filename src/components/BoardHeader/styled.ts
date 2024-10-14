@@ -1,4 +1,4 @@
-import { FONT_SIZES } from "@/ui/theme";
+import { FONT_SIZES, PALETTE } from "@/ui/theme";
 import styled from "styled-components";
 
 export const Root = styled.div`
@@ -6,6 +6,7 @@ export const Root = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+  /* border-bottom: solid 1px ${PALETTE.grey[200]}; */
 `;
 
 export const BoardName = styled.h1`
@@ -14,4 +15,7 @@ export const BoardName = styled.h1`
 
 export const ButtonWrapper = styled.div`
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 `;
