@@ -9,7 +9,7 @@ export const Root = styled.header`
   border-bottom: solid 1px ${PALETTE.grey[200]};
   background-color: white;
   z-index: 1;
-  padding: 16px;
+  padding: 12px 16px;
 `;
 
 export const Headline = styled.div`
@@ -17,6 +17,7 @@ export const Headline = styled.div`
   flex-direction: column;
   flex-grow: 1;
   max-width: calc(100% - 40px);
+  gap: 4px;
 `;
 
 export const Title = styled.h6`

@@ -9,7 +9,7 @@ export const AppContainer = () => {
   return (
     <AppStateProvider>
       <AppRoot>
-        <AppHeader>header</AppHeader>
+        <AppHeader>Tasks Manager</AppHeader>
         <AppContent>
           <BoardContainer />
         </AppContent>

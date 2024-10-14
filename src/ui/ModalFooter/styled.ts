@@ -6,7 +6,7 @@ export const Root = styled.div`
   justify-content: flex-end;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
+  padding: 16px;
   margin-top: "auto";
   position: sticky;
   bottom: 0;

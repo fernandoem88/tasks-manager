@@ -7,22 +7,26 @@ export const Root = styled.section`
   height: 100%;
   max-height: 100%;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  padding: 8px;
-  gap: 16px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 4px;
 `;
 
 export const ColumnHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 8px;
+  padding: 8px;
   border-bottom: solid 1px ${PALETTE.grey[200]};
+  position: sticky;
+  top: 0;
+  background-color: ${PALETTE.grey[100]};
+  backdrop-filter: blur(3px);
 `;
 
 export const TasksList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
+  padding: 8px;
 `;

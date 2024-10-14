@@ -16,3 +16,10 @@ export const TaskHeader = styled.header`
   align-items: center;
   gap: 16px;
 `;
+
+export const Time = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1;
+`;

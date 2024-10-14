@@ -8,7 +8,7 @@ export const Root = styled.div`
   width: 100%;
   margin: auto;
   padding: 16px;
-  gap: 16px;
+  gap: 32px;
   padding: 16px;
 `;
 

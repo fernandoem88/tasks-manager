@@ -6,7 +6,6 @@ export const Root = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
-  /* border-bottom: solid 1px ${PALETTE.grey[200]}; */
 `;
 
 export const BoardName = styled.h1`

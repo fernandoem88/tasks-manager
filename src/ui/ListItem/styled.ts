@@ -2,17 +2,18 @@ import { FONT_SIZES, PALETTE } from "@/ui/theme";
 import styled, { css } from "styled-components";
 
 export const Root = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== "divider",
-})<{ divider?: boolean }>`
+  shouldForwardProp: (prop) => !["divider"].includes(prop),
+})<{ divider?: boolean; isSelected?: boolean }>`
   width: 100%;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
+  color: ${(p) => (p.isSelected ? PALETTE.primary.main : "#444")};
   transition: background-color 0.3s;
   cursor: pointer;
   &:hover {
-    background-color: ${PALETTE.grey["200"]};
+    background-color: ${PALETTE.primary.main}15;
   }
 
   ${(p) => {

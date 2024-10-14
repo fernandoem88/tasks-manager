@@ -12,7 +12,7 @@ const getLineHeight = (variant: Variant = "body1") => {
       return 1.4;
 
     default:
-      return 1;
+      return 1.2;
   }
 };
 

@@ -15,7 +15,7 @@ export interface ButtonRootProps {
 const BUTTON_SIZES = {
   sm: FONT_SIZES.body2,
   md: FONT_SIZES.body1,
-  lg: FONT_SIZES.h6,
+  lg: FONT_SIZES.body1,
 };
 
 const getStyle = ({ color, variant }: ButtonRootProps) => {
@@ -44,6 +44,7 @@ export const Root = styled.button.withConfig({
   text-transform: uppercase;
   padding: ${(p) => (p.rounded ? "4px" : "4px 8px")};
   font-size: ${({ size = "md" }) => BUTTON_SIZES[size]};
+  min-height: ${(p) => (p.size === "lg" ? "36px" : "15px")};
   ${(p) =>
     p.rounded &&
     css`

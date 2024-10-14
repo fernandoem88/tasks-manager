@@ -87,6 +87,7 @@ export const BoardHeader = ({
             return (
               <UiListItem
                 key={boardId}
+                isSelected={boardId === selectedId}
                 onClick={(e) => handleSelect(board.id, e)}
                 divider={index < array.length - 1}
               >
