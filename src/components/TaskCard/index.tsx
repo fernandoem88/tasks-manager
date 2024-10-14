@@ -1,11 +1,12 @@
 import type { Task } from "@/types";
-import { Root, TaskHeader } from "./styled";
+import { Root, TaskHeader, Time } from "./styled";
 import { UiTypography } from "@/ui/Typography";
 import { DateTime } from "luxon";
 import { UiButton } from "@/ui/Button";
 import { UiPopover } from "@/ui/Popover";
 import { useRef, useState } from "react";
 import { TaskMenu } from "../TaskMenu";
+import { UiAlert } from "@/ui/Alert";
 
 interface Props {
   task: Task;
@@ -23,7 +24,19 @@ export const TaskCard = ({
   const menuAnchorRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const lastHystory = task.history[task.history.length - 1];
-  const movedOn = DateTime.fromISO(lastHystory).toFormat("yy LLL dd");
+
+  const lastDate = DateTime.fromISO(lastHystory);
+  const movedOn = lastDate.toFormat("DD");
+
+  const diff = lastDate
+    .diffNow()
+    .negate()
+    .rescale()
+    .set({ millisecond: 0, second: 0 })
+    .shiftToAll()
+    .rescale();
+
+  const time = diff.toHuman({ unitDisplay: "short" });
 
   const handleEdit = () => {
     setIsMenuOpen(false);
@@ -50,9 +63,14 @@ export const TaskCard = ({
         </UiButton>
       </TaskHeader>
       {!!task.description && (
-        <UiTypography variant="body2">{task.description}</UiTypography>
+        <UiAlert>
+          <UiTypography variant="body2">{task.description}</UiTypography>
+        </UiAlert>
       )}
-      <UiTypography variant="caption">{movedOn}</UiTypography>
+      <Time>
+        <UiTypography variant="caption">{movedOn}</UiTypography>
+        <UiTypography variant="caption">{time}</UiTypography>
+      </Time>
       <UiPopover
         anchorEl={menuAnchorRef.current}
         open={isMenuOpen}

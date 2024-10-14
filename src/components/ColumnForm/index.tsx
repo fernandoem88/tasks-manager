@@ -5,6 +5,7 @@ import { UiModalHeader } from "@/ui/ModalHeader";
 import { UiModalContent } from "@/ui/ModalContent";
 import { UiTextField } from "@/ui/TextField";
 import { UiTypography } from "@/ui/Typography";
+import { UiAlert } from "@/ui/Alert";
 
 interface Props {
   initialColumnName?: string;
@@ -36,10 +37,12 @@ export const ColumnForm = ({
       />
       <UiModalContent>
         <Root>
-          <UiTypography>
-            please digit the column name in the text field below and click on
-            confirm to send your request
-          </UiTypography>
+          <UiAlert>
+            <UiTypography variant="body1">
+              please digit the column name in the text field below and click on
+              confirm to send your request
+            </UiTypography>
+          </UiAlert>
           <UiTextField
             label="Column Name"
             value={name}

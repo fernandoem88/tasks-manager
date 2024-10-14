@@ -5,6 +5,7 @@ import { UiModalHeader } from "@/ui/ModalHeader";
 import { UiModalContent } from "@/ui/ModalContent";
 import { UiTextField } from "@/ui/TextField";
 import { UiTypography } from "@/ui/Typography";
+import { UiAlert } from "@/ui/Alert";
 
 interface Props {
   data?: { name: string; description?: string };
@@ -36,13 +37,18 @@ export const TaskCreatorForm = ({
 
   return (
     <>
-      <UiModalHeader title={`${columnName} / Task Form`} />
+      <UiModalHeader
+        title={`${columnName} / Task`}
+        subTitle={data ? "Edit" : "Create"}
+      />
       <UiModalContent>
         <Root>
-          <UiTypography>
-            please enter the board name and click on confirm to send your
-            request
-          </UiTypography>
+          <UiAlert>
+            <UiTypography>
+              please enter the board name and click on confirm to send your
+              request
+            </UiTypography>
+          </UiAlert>
           <UiTextField
             label="Task Name"
             value={name}
