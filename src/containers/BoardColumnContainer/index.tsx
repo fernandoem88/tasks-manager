@@ -8,15 +8,15 @@ import { useDispatch } from "@/contexts/AppStateProvider/hooks/useDispatch";
 import { UiButton } from "@/ui/Button";
 import { UiTypography } from "@/ui/Typography";
 import { UiPopover } from "@/ui/Popover";
-import { UiListItem } from "@/ui/ListItem";
-import { TaskCard } from "@/components/TaskCard";
 import { ColumnForm } from "@/components/ColumnForm";
+import { TaskContainer } from "../TaskContainer";
+import { ColumnMenu } from "@/components/ColumnMenu";
 
 interface Props {
   columnId: string;
 }
 export const BoardColumnContainer = ({ columnId }: Props) => {
-  const { columns, tasks, boards } = useAppState();
+  const { columns, boards } = useAppState();
   const menuAnchorRef = useRef(null);
   const [isColumnCreatorOpen, setIsColumnCreatorOpen] = useState(false);
   const dispatch = useDispatch();
@@ -60,7 +60,6 @@ export const BoardColumnContainer = ({ columnId }: Props) => {
           <UiTypography variant="h6">{column.name}</UiTypography>
           <UiButton
             ref={menuAnchorRef}
-            // variant="contained"
             noElevation
             rounded
             onClick={() => setIsMenuOpen(true)}
@@ -71,11 +70,7 @@ export const BoardColumnContainer = ({ columnId }: Props) => {
 
         <TasksList>
           {column.tasksIds.map((taskId) => {
-            const task = tasks[taskId];
-
-            if (!task) return null;
-
-            return <TaskCard key={taskId} task={task} />;
+            return <TaskContainer key={taskId} taskId={taskId} />;
           })}
         </TasksList>
       </Root>
@@ -94,14 +89,10 @@ export const BoardColumnContainer = ({ columnId }: Props) => {
         open={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
       >
-        <ul>
-          {isFirstColumn && (
-            <UiListItem divider onClick={handleOpenTaskCreator}>
-              New Task
-            </UiListItem>
-          )}
-          <UiListItem onClick={handleOpenColumnCreator}>Edit</UiListItem>
-        </ul>
+        <ColumnMenu
+          onEdit={handleOpenColumnCreator}
+          onNewTask={isFirstColumn ? handleOpenTaskCreator : undefined}
+        />
       </UiPopover>
       <UiModalPaper
         open={isColumnCreatorOpen}
