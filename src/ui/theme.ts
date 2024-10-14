@@ -26,7 +26,7 @@ export const PALETTE = {
     300: "#c4c4c4",
   },
   primary: {
-    main: "#7b28ae",
+    main: "#3a86ff",
     light: "#bb6dd1",
     dark: "#471c98",
   },
