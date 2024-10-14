@@ -14,6 +14,7 @@ export interface BoardColumn {
 export interface Task {
   id: string;
   title: string;
+  columnId: string;
   description?: string;
   createdAt: string;
   history: string[];
@@ -22,5 +23,5 @@ export interface Task {
 export interface AppState {
   boards: Record<string, Board>;
   columns: Record<string, BoardColumn>;
-  tasks: Record<string>;
+  tasks: Record<string, Task>;
 }
