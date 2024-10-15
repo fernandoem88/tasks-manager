@@ -80,19 +80,20 @@ export const BoardContainer = () => {
             {!hasColumns && (
               <div>
                 <UiAlert>
-                  Please add some columns to this board by using the{" "}
-                  <strong>NEW COLUMN</strong> button
+                  <>Please add some columns to this board by using the</>
+                  &nbsp;
+                  <strong>NEW COLUMN</strong>
+                  &nbsp;
+                  <>button</>
                 </UiAlert>
               </div>
             )}
 
             {hasColumns && (
               <UiCarousel gap="12px">
-                {selectedBoard?.columnIds.map((columnId) => {
-                  return (
-                    <BoardColumnContainer key={columnId} columnId={columnId} />
-                  );
-                })}
+                {selectedBoard?.columnIds.map((columnId) => (
+                  <BoardColumnContainer key={columnId} columnId={columnId} />
+                ))}
               </UiCarousel>
             )}
           </BoardContent>
