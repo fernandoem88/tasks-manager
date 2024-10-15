@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tasks Manager Project
+
+This project is a task manager built using [Next.js](https://nextjs.org).
 
 ## Getting Started
 
-First, run the development server:
+To get the project up and running locally, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Install the required dependencies:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   npm i
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Start the development server:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   npm run dev
+   ```
 
-## Learn More
+3. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-To learn more about Next.js, take a look at the following resources:
+![PREVIEW](./screenshot.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Node Modules
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Here are the key libraries used in this project:
 
-## Deploy on Vercel
+- **styled-components**: For CSS-in-JS development, enabling scoped and dynamic styling.
+- **react-dnd**: Core utilities for drag-and-drop functionality using hooks like `useDrag` and `useDrop`.
+- **immer-js**: Facilitates immutable data handling while making updates to state simpler.
+- **zod**: For robust data validation and schema definition.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Folders
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The important folders are located inside the main [**src**](./src) folder:
+
+- **[app](./src/app/page.ts)**: The main entry point for routing.
+- **[components](./src/components/)**: These components do not access application state directly. They receive data as props from parent components and may have their own local state.
+- **[containers](./src/containers/)**: Components in this folder directly consume the application state. The main entry point is [RootContainer](./src/containers/RootContainer/index.tsx).
+- **[contexts](./src/contexts/)**: This folder contains global providers like `AppStateProvider` for managing global state.
+
+- **[lib](./src/lib/)**: Contains reusable libraries or utility components, such as [drag-and-drop](./src/lib/drag-and-drop/), designed for specific use cases.
+
+- **[ui](./src/ui/)**: Houses reusable UI components that ensure consistent styling across the project.
+
+## Persistence
+
+The project has two key components for data persistence:
+
+- **[LocalStorageContainer](./src/containers/LocalStorageContainer/index.tsx)**: This component saves data to `localStorage` before page reloads and restores the saved data on initial render. However, note that the saved state is delayed since it is fetched from the client side.
+
+- **[ServerStorageContainer](./src/containers/ServerStorageContainer/)**: Using Next.js’s "use server" notation, this component saves data on the server before reloads. The saved data from [server-storage](./src/server-storage/index.ts) is pre-fetched and passed to the state provider, making it available for use on the initial render.
