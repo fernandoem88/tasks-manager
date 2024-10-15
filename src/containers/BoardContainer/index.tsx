@@ -11,7 +11,7 @@ import { BoardForm } from "@/components/BoardCreatorForm";
 import { useDispatch } from "@/contexts/AppStateProvider/hooks/useDispatch";
 import { BoardColumnContainer } from "../BoardColumnContainer";
 import { ColumnForm } from "@/components/ColumnForm";
-import { UiAlert } from "@/ui/Alert";
+import { BoardAlertMessage } from "@/components/BoardAlertMessage";
 
 export const BoardContainer = () => {
   const dispatch = useDispatch();
@@ -77,18 +77,7 @@ export const BoardContainer = () => {
             }}
           />
           <BoardContent>
-            {!hasColumns && (
-              <div>
-                <UiAlert>
-                  <>Please add some columns to this board by using the</>
-                  &nbsp;
-                  <strong>NEW COLUMN</strong>
-                  &nbsp;
-                  <>button</>
-                </UiAlert>
-              </div>
-            )}
-
+            {!hasColumns && <BoardAlertMessage />}
             {hasColumns && (
               <UiCarousel gap="12px">
                 {selectedBoard?.columnIds.map((columnId) => (
