@@ -3,7 +3,7 @@
 import { BoardHeader } from "@/components/BoardHeader";
 import { useState } from "react";
 import { Root, BoardContent } from "./styled";
-import { UiCarousel } from "@/ui/Carousel";
+import { UiCarousel, UiCarouselCard } from "@/ui/Carousel";
 import { useAppState } from "@/contexts/AppStateProvider";
 import { EmptyBoard } from "@/components/EmptyBoard";
 import { UiModalPaper } from "@/ui/ModalPaper";
@@ -12,6 +12,7 @@ import { useDispatch } from "@/contexts/AppStateProvider/hooks/useDispatch";
 import { BoardColumnContainer } from "../BoardColumnContainer";
 import { ColumnForm } from "@/components/ColumnForm";
 import { BoardAlertMessage } from "@/components/BoardAlertMessage";
+import { UiButton } from "@/ui/Button";
 
 export const BoardContainer = () => {
   const dispatch = useDispatch();
@@ -70,19 +71,27 @@ export const BoardContainer = () => {
             getBoard={(boardId) => boards[boardId]}
             onSelect={setSelectedBoardId}
             onNewBoard={() => setIsBoardCreatorOpen(true)}
-            onNewColumn={() => setIsColumnCreatorOpen(true)}
             onEditBoard={() => {
               setIsBoardCreatorOpen(true);
               setIsBoardEditMode(true);
             }}
           />
           <BoardContent>
-            {!hasColumns && <BoardAlertMessage />}
+            {!hasColumns && (
+              <BoardAlertMessage
+                onNewColumn={() => setIsColumnCreatorOpen(true)}
+              />
+            )}
             {hasColumns && (
               <UiCarousel gap="12px">
                 {selectedBoard?.columnIds.map((columnId) => (
                   <BoardColumnContainer key={columnId} columnId={columnId} />
                 ))}
+                <UiCarouselCard width="40px">
+                  <UiButton onClick={() => setIsColumnCreatorOpen(true)}>
+                    +
+                  </UiButton>
+                </UiCarouselCard>
               </UiCarousel>
             )}
           </BoardContent>

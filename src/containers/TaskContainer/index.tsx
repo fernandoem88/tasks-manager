@@ -2,6 +2,7 @@ import { TaskCard } from "@/components/TaskCard";
 import { TaskCreatorForm } from "@/components/TaskCreatorForm";
 import { useAppState } from "@/contexts/AppStateProvider";
 import { useDispatch } from "@/contexts/AppStateProvider/hooks/useDispatch";
+import { Draggable } from "@/lib/drag-and-drop/components/Draggable";
 import { UiModalPaper } from "@/ui/ModalPaper";
 import { useState } from "react";
 
@@ -15,10 +16,10 @@ export const TaskContainer = ({ taskId }: Props) => {
   const dispatch = useDispatch();
 
   const task = tasks[taskId];
-
   const column = columns[task.columnId];
   const board = boards[column.boardId];
 
+  const taskIndex = column.tasksIds.findIndex((id) => taskId === id);
   const columnIndex = board.columnIds.findIndex(
     (columnId) => columnId === column.id
   );
@@ -39,12 +40,26 @@ export const TaskContainer = ({ taskId }: Props) => {
 
   return (
     <>
-      <TaskCard
-        task={task}
-        isInLastStage={isInLastStage}
-        onEdit={() => setIsTaskCreatorOpen(true)}
-        onMoveToNextStage={handleMoveToNextStage}
-      />
+      <Draggable
+        type={String(columnIndex)}
+        droppableId={column.id}
+        id={taskId}
+        index={taskIndex}
+      >
+        {({ ref, style }, { isDragging }) => {
+          const opacity = isDragging ? 0 : 1;
+          return (
+            <div ref={ref} style={{ ...style, opacity }} key={taskId}>
+              <TaskCard
+                task={task}
+                isInLastStage={isInLastStage}
+                onEdit={() => setIsTaskCreatorOpen(true)}
+                onMoveToNextStage={handleMoveToNextStage}
+              />
+            </div>
+          );
+        }}
+      </Draggable>
       <UiModalPaper
         open={isTaskCreatorOpen}
         onClose={() => setIsTaskCreatorOpen(false)}

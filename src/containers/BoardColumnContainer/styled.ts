@@ -30,3 +30,8 @@ export const TasksList = styled.div`
   gap: 12px;
   padding: 8px;
 `;
+
+export const AddTaskButtonWrapper = styled.div<{ $disabled?: boolean }>`
+  transition: 0.2s;
+  opacity: ${(p) => (p.$disabled ? 0 : 1)};
+`;

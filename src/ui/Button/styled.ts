@@ -18,7 +18,7 @@ const BUTTON_SIZES = {
   lg: FONT_SIZES.body1,
 };
 
-const getStyle = ({ color, variant }: ButtonRootProps) => {
+const getStyle = ({ color, variant, rounded }: ButtonRootProps) => {
   if (variant === "contained") {
     return css`
       border-color: none !important;
@@ -29,6 +29,7 @@ const getStyle = ({ color, variant }: ButtonRootProps) => {
 
   return css`
     border: solid 1px ${color ? PALETTE[color].main : PALETTE.grey[200]};
+    ${rounded ? "" : "background-color: white;"}
   `;
 };
 

@@ -10,7 +10,7 @@ export const ColumnMenu = ({ onEdit, onNewTask }: Props) => {
     <ul>
       {!!onEdit && (
         <UiListItem divider onClick={onEdit}>
-          Edit Board
+          Edit Name
         </UiListItem>
       )}
       {!!onNewTask && <UiListItem onClick={onNewTask}>New Task</UiListItem>}

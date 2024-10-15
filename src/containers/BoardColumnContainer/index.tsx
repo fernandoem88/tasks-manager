@@ -1,31 +1,35 @@
 import { useAppState } from "@/contexts/AppStateProvider";
 import { UiCarouselCard } from "@/ui/Carousel";
-import { ColumnHeader, Root, TasksList } from "./styled";
+import { AddTaskButtonWrapper, ColumnHeader, Root, TasksList } from "./styled";
 import { UiModalPaper } from "@/ui/ModalPaper";
 import { useRef, useState } from "react";
 import { TaskCreatorForm } from "@/components/TaskCreatorForm";
 import { useDispatch } from "@/contexts/AppStateProvider/hooks/useDispatch";
 import { UiButton } from "@/ui/Button";
 import { UiTypography } from "@/ui/Typography";
-import { UiPopover } from "@/ui/Popover";
 import { ColumnForm } from "@/components/ColumnForm";
 import { TaskContainer } from "../TaskContainer";
-import { ColumnMenu } from "@/components/ColumnMenu";
+import { Droppable } from "@/lib/drag-and-drop/components/Droppable";
+import { UiPencilIcon } from "@/ui/PencilIcon";
 
 interface Props {
   columnId: string;
 }
 export const BoardColumnContainer = ({ columnId }: Props) => {
-  const { columns, boards } = useAppState();
+  const appState = useAppState();
   const menuAnchorRef = useRef(null);
   const [isColumnCreatorOpen, setIsColumnCreatorOpen] = useState(false);
   const dispatch = useDispatch();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isTaskCreatorOpen, setIsTaskCreatorOpen] = useState(false);
 
-  const column = columns[columnId];
-  const board = boards[column.boardId];
-  const isFirstColumn = board.columnIds[0] === columnId;
+  const column = appState.columns[columnId];
+  const board = appState.boards[column.boardId];
+  const columnIndex = board.columnIds.findIndex((id) => columnId === id);
+
+  const accept =
+    columnIndex > 0
+      ? [String(columnIndex), String(columnIndex - 1)]
+      : [String(columnIndex)];
 
   const handleCreateTask = (data: { name: string; description?: string }) => {
     dispatch("newTask", {
@@ -43,12 +47,10 @@ export const BoardColumnContainer = ({ columnId }: Props) => {
 
   const handleOpenTaskCreator = () => {
     setIsTaskCreatorOpen(true);
-    setIsMenuOpen(false);
   };
 
   const handleOpenColumnCreator = () => {
     setIsColumnCreatorOpen(true);
-    setIsMenuOpen(false);
   };
 
   if (!column) return null;
@@ -62,17 +64,37 @@ export const BoardColumnContainer = ({ columnId }: Props) => {
             ref={menuAnchorRef}
             noElevation
             rounded
-            onClick={() => setIsMenuOpen(true)}
+            onClick={handleOpenColumnCreator}
           >
-            &#8942;
+            <UiPencilIcon />
           </UiButton>
         </ColumnHeader>
+        <Droppable
+          accept={accept}
+          id={columnId}
+          onDrop={(dropResult) => dispatch("dragAndDrop", { dropResult })}
+        >
+          {(dropProps, { isDropTarget }, placeholder) => {
+            return (
+              <TasksList {...dropProps}>
+                {column.tasksIds.map((taskId) => {
+                  return <TaskContainer key={taskId} taskId={taskId} />;
+                })}
 
-        <TasksList>
-          {column.tasksIds.map((taskId) => {
-            return <TaskContainer key={taskId} taskId={taskId} />;
-          })}
-        </TasksList>
+                <AddTaskButtonWrapper $disabled={isDropTarget}>
+                  <UiButton
+                    disabled={isDropTarget}
+                    onClick={handleOpenTaskCreator}
+                  >
+                    +
+                  </UiButton>
+                </AddTaskButtonWrapper>
+
+                {placeholder}
+              </TasksList>
+            );
+          }}
+        </Droppable>
       </Root>
       <UiModalPaper
         open={isTaskCreatorOpen}
@@ -84,16 +106,7 @@ export const BoardColumnContainer = ({ columnId }: Props) => {
           onClose={() => setIsTaskCreatorOpen(false)}
         />
       </UiModalPaper>
-      <UiPopover
-        anchorEl={menuAnchorRef.current}
-        open={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
-      >
-        <ColumnMenu
-          onEdit={handleOpenColumnCreator}
-          onNewTask={isFirstColumn ? handleOpenTaskCreator : undefined}
-        />
-      </UiPopover>
+
       <UiModalPaper
         open={isColumnCreatorOpen}
         onClose={() => setIsColumnCreatorOpen(false)}

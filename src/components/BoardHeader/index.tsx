@@ -12,7 +12,6 @@ interface Props {
   getBoard: (id: string) => Board;
   selectedId?: string;
   onNewBoard?: () => void;
-  onNewColumn?: () => void;
   onEditBoard?: () => void;
 }
 
@@ -21,7 +20,6 @@ export const BoardHeader = ({
   selectedId,
   onSelect,
   onNewBoard,
-  onNewColumn,
   getBoard,
   onEditBoard,
 }: Props) => {
@@ -68,9 +66,6 @@ export const BoardHeader = ({
         </UiButton>
       )}
       <ButtonWrapper>
-        <UiButton size="sm" onClick={onNewColumn}>
-          new column |||
-        </UiButton>
         <UiButton size="sm" onClick={onNewBoard}>
           new board +
         </UiButton>

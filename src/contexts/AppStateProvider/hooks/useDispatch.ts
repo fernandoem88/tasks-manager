@@ -3,6 +3,8 @@ import { EMPTY_APP_STATE, useAppState, useSetAppState } from "..";
 import type { Board, BoardColumn, Task } from "@/types";
 import { produce } from "immer";
 import { DateTime } from "luxon";
+import { DropResult } from "@/lib/drag-and-drop/components/Provider/types";
+import { onReplace } from "../utils";
 
 interface ActionPayload {
   newBoard: string;
@@ -13,6 +15,7 @@ interface ActionPayload {
   editTask: Omit<Task, "history" | "createdAt" | "columnId">;
   sendTaskToNextStage: { taskId: string };
   reset: null;
+  dragAndDrop: { dropResult: DropResult };
 }
 
 export const useDispatch = () => {
@@ -150,6 +153,13 @@ export const useDispatch = () => {
     setState(newState);
     return newState;
   };
+  const handleDragAndDrop = ({ dropResult }: { dropResult: DropResult }) => {
+    const newState = onReplace(dropResult, appState);
+    if (!newState) return null;
+
+    setState(newState);
+    return newState;
+  };
 
   const handleReset = () => {
     setState(EMPTY_APP_STATE);
@@ -163,6 +173,10 @@ export const useDispatch = () => {
     switch (action) {
       case "reset": {
         return handleReset();
+      }
+      case "dragAndDrop": {
+        type Payload = ActionPayload["dragAndDrop"];
+        return handleDragAndDrop(payload as Payload);
       }
       case "newBoard": {
         type Payload = ActionPayload["newBoard"];
