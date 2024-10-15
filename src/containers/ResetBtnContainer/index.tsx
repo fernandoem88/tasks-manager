@@ -1,7 +1,7 @@
 "use client";
 
 import { UiButton } from "@/ui/Button";
-import { resetStore } from "@/store";
+import { resetStore } from "@/server-storage";
 import { useDispatch } from "@/contexts/AppStateProvider/hooks/useDispatch";
 import { STORAGE_ITEM } from "../LocalStorageContainer";
 

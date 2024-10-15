@@ -6,6 +6,7 @@ interface Props extends ButtonRootProps {
   children: ReactNode;
   onClick?: (e: any) => void;
   disabled?: boolean;
+  title?: string;
 }
 
 export const UiButton = forwardRef(

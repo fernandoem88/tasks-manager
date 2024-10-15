@@ -1,5 +1,5 @@
 import { AppContainer } from "@/containers/RootContainer";
-import { getStore } from "@/store";
+import { getStore } from "@/server-storage";
 
 export const dynamic = "force-dynamic";
 

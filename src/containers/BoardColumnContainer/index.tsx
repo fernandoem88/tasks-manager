@@ -83,6 +83,7 @@ export const BoardColumnContainer = ({ columnId }: Props) => {
 
                 <AddTaskButtonWrapper $disabled={isDropTarget}>
                   <UiButton
+                    title="new task"
                     disabled={isDropTarget}
                     onClick={handleOpenTaskCreator}
                   >

@@ -88,7 +88,10 @@ export const BoardContainer = () => {
                   <BoardColumnContainer key={columnId} columnId={columnId} />
                 ))}
                 <UiCarouselCard width="40px">
-                  <UiButton onClick={() => setIsColumnCreatorOpen(true)}>
+                  <UiButton
+                    title="new column"
+                    onClick={() => setIsColumnCreatorOpen(true)}
+                  >
                     +
                   </UiButton>
                 </UiCarouselCard>

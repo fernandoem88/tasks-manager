@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, ReactNode, useEffect, useRef } from "react";
-import { setStore } from "@/store";
+import { setStore } from "@/server-storage";
 import { useAppState } from "@/contexts/AppStateProvider";
 
 interface Props {
