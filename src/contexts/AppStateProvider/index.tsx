@@ -3,7 +3,7 @@
 import type { AppState } from "@/types";
 import { createContext, ReactNode, useContext, useState } from "react";
 
-const EMPTY_APP_STATE: AppState = {
+export const EMPTY_APP_STATE: AppState = {
   boards: {},
   columns: {},
   tasks: {},
@@ -15,8 +15,14 @@ export const setAppStateContext = createContext((_state: AppState) => {});
 export const useAppState = () => useContext(appStateContext);
 export const useSetAppState = () => useContext(setAppStateContext);
 
-export const AppStateProvider = ({ children }: { children: ReactNode }) => {
-  const [state, setState] = useState(EMPTY_APP_STATE);
+export const AppStateProvider = ({
+  children,
+  initialState = EMPTY_APP_STATE,
+}: {
+  children: ReactNode;
+  initialState?: AppState;
+}) => {
+  const [state, setState] = useState(initialState);
 
   return (
     <appStateContext.Provider value={state}>

@@ -12,6 +12,7 @@ export const AppRoot = styled.main`
 export const AppHeader = styled.header`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 48px;
   border-bottom: solid 1px ${PALETTE.grey["300"]};
   position: sticky;

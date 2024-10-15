@@ -1,5 +1,5 @@
 import { getUniqId } from "@/utils/getUniqId";
-import { useAppState, useSetAppState } from "..";
+import { EMPTY_APP_STATE, useAppState, useSetAppState } from "..";
 import type { Board, BoardColumn, Task } from "@/types";
 import { produce } from "immer";
 import { DateTime } from "luxon";
@@ -12,6 +12,7 @@ interface ActionPayload {
   newTask: { taskName: string; columnId: string; description?: string };
   editTask: Omit<Task, "history" | "createdAt" | "columnId">;
   sendTaskToNextStage: { taskId: string };
+  reset: null;
 }
 
 export const useDispatch = () => {
@@ -150,11 +151,19 @@ export const useDispatch = () => {
     return newState;
   };
 
+  const handleReset = () => {
+    setState(EMPTY_APP_STATE);
+  };
+
   return <T extends keyof ActionPayload>(
     action: T,
-    payload: ActionPayload[T]
+    ...args: T extends "reset" ? [] : [payload: ActionPayload[T]]
   ) => {
+    const [payload] = args;
     switch (action) {
+      case "reset": {
+        return handleReset();
+      }
       case "newBoard": {
         type Payload = ActionPayload["newBoard"];
         return handleNewBoard(payload as Payload);

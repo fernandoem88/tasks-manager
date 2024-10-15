@@ -4,16 +4,28 @@ import { AppStateProvider } from "@/contexts/AppStateProvider";
 
 import { AppContent, AppHeader, AppRoot } from "./styled";
 import { BoardContainer } from "../BoardContainer";
+import { AppState } from "@/types";
+import { ServerStorageContainer } from "../ServerStorageContainer";
+import { ResetBtnContainer } from "../ResetBtnContainer";
 
-export const AppContainer = () => {
+interface Props {
+  initialState: AppState;
+}
+
+export const AppContainer = ({ initialState }: Props) => {
   return (
-    <AppStateProvider>
-      <AppRoot>
-        <AppHeader>Tasks Manager</AppHeader>
-        <AppContent>
-          <BoardContainer />
-        </AppContent>
-      </AppRoot>
+    <AppStateProvider initialState={initialState}>
+      <ServerStorageContainer>
+        <AppRoot>
+          <AppHeader>
+            Tasks Manager
+            <ResetBtnContainer />
+          </AppHeader>
+          <AppContent>
+            <BoardContainer />
+          </AppContent>
+        </AppRoot>
+      </ServerStorageContainer>
     </AppStateProvider>
   );
 };
