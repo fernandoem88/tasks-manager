@@ -6,21 +6,20 @@ export const Root = styled.section`
   border-radius: 8px;
   height: 100%;
   max-height: 100%;
-  overflow-y: auto;
+  overflow: hidden;
   display: grid;
   grid-template-rows: auto 1fr;
-  gap: 4px;
 `;
 
 export const ColumnHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px;
+  padding: 4px 8px;
   border-bottom: solid 1px ${PALETTE.grey[200]};
   position: sticky;
   top: 0;
-  background-color: ${PALETTE.grey[100]};
+  background-color: ${PALETTE.grey[400]};
   backdrop-filter: blur(3px);
 `;
 
@@ -29,9 +28,12 @@ export const TasksList = styled.div`
   flex-direction: column;
   gap: 12px;
   padding: 8px;
+  overflow-y: auto;
 `;
 
 export const AddTaskButtonWrapper = styled.div<{ $disabled?: boolean }>`
-  transition: 0.2s;
+  transition: opacity 0.2s;
   opacity: ${(p) => (p.$disabled ? 0 : 1)};
+  position: sticky;
+  bottom: 4px;
 `;

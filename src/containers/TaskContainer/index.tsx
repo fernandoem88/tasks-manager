@@ -1,10 +1,9 @@
 import { TaskCard } from "@/components/TaskCard";
-import { TaskCreatorForm } from "@/components/TaskCreatorForm";
 import { useAppState } from "@/contexts/AppStateProvider";
 import { useDispatch } from "@/contexts/AppStateProvider/hooks/useDispatch";
 import { Draggable } from "@/lib/drag-and-drop/components/Draggable";
-import { UiModalPaper } from "@/ui/ModalPaper";
 import { useState } from "react";
+import { ModalTaskCreatorContainer } from "../ModalTaskCreatorContainer";
 
 interface Props {
   taskId: string;
@@ -28,11 +27,6 @@ export const TaskContainer = ({ taskId }: Props) => {
 
   if (!task) return null;
 
-  const handleEditTask = (data: { name: string; description?: string }) => {
-    dispatch("editTask", { ...data, id: task.id });
-    setIsTaskCreatorOpen(false);
-  };
-
   const handleMoveToNextStage = () => {
     dispatch("sendTaskToNextStage", { taskId: task.id });
     setIsTaskCreatorOpen(false);
@@ -45,11 +39,12 @@ export const TaskContainer = ({ taskId }: Props) => {
         droppableId={column.id}
         id={taskId}
         index={taskIndex}
+        key={taskId}
       >
         {({ ref, style }, { isDragging }) => {
           const opacity = isDragging ? 0 : 1;
           return (
-            <div ref={ref} style={{ ...style, opacity }} key={taskId}>
+            <div ref={ref} style={{ ...style, opacity }}>
               <TaskCard
                 task={task}
                 isInLastStage={isInLastStage}
@@ -60,17 +55,12 @@ export const TaskContainer = ({ taskId }: Props) => {
           );
         }}
       </Draggable>
-      <UiModalPaper
+      <ModalTaskCreatorContainer
+        taskId={taskId}
         open={isTaskCreatorOpen}
         onClose={() => setIsTaskCreatorOpen(false)}
-      >
-        <TaskCreatorForm
-          columnName={column.name}
-          data={task}
-          onConfirm={handleEditTask}
-          onClose={() => setIsTaskCreatorOpen(false)}
-        />
-      </UiModalPaper>
+        columnId={task.columnId}
+      />
     </>
   );
 };

@@ -9,7 +9,7 @@ import { onReplace } from "../utils";
 interface ActionPayload {
   newBoard: string;
   editBoardName: { id: string; name: string };
-  newBoardColumn: { columnName: string; boardId: string };
+  newBoardColumn: { name: string; boardId: string };
   editBoardColumnName: { id: string; name: string };
   newTask: { taskName: string; columnId: string; description?: string };
   editTask: Omit<Task, "history" | "createdAt" | "columnId">;
@@ -51,11 +51,11 @@ export const useDispatch = () => {
 
   const handleNewBoardColumn = ({
     boardId,
-    columnName,
+    name,
   }: ActionPayload["newBoardColumn"]) => {
     const id = getUniqId("column-");
     const column: BoardColumn = {
-      name: columnName,
+      name,
       id,
       boardId,
       tasksIds: [],
