@@ -1,6 +1,8 @@
+"use client";
+
 import React, {
   createContext,
-  FC,
+  type FC,
   useCallback,
   useEffect,
   useMemo,
@@ -62,12 +64,12 @@ export const Droppable: FC<DroppableProps> = (props) => {
 
       const rect = draggedItem?.__rect__ as DOMRect;
       const marginDeltaHeight = Math.max(
-        draggedItem?.margin.top,
-        draggedItem?.margin.bottom
+        draggedItem?.margin?.top,
+        draggedItem?.margin?.bottom
       );
       const marginDeltaWidth = Math.max(
-        draggedItem?.margin.left,
-        draggedItem?.margin.right
+        draggedItem?.margin?.left,
+        draggedItem?.margin?.right
       );
 
       const marginDelta = props.horizontal
@@ -130,8 +132,12 @@ export const Droppable: FC<DroppableProps> = (props) => {
   const getAcceptTypes = useCallback(() => acceptRef.current, []);
 
   // create new context for the droppable zone
-  const [dropContext] = useState(() =>
-    createContext({
+  const [dropContext] = useState(() => {
+    const prevContext = STORE.droppables[props.id]?.context;
+
+    if (prevContext) return prevContext;
+
+    const newContext = createContext({
       setThreesholdIndex,
       threesholdIndex,
       setThreesholdId,
@@ -139,18 +145,20 @@ export const Droppable: FC<DroppableProps> = (props) => {
       isDropTarget,
       id: props.id,
       getAcceptTypes,
-    })
-  );
+    });
 
-  if (!STORE.droppables[props.id]) {
-    STORE.droppables[props.id] = { context: dropContext };
-  }
+    STORE.droppables[props.id] = { context: newContext };
+
+    return newContext;
+  });
 
   useEffect(() => {
+    STORE.droppables[props.id] = { context: dropContext };
+
     return () => {
       delete STORE.droppables[props.id];
     };
-  }, [props.id]);
+  }, [props.id, dropContext]);
 
   const dropContextValue = useMemo(() => {
     return {

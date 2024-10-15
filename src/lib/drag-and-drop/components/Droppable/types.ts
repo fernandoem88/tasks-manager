@@ -13,6 +13,7 @@ export interface DroppableSnapshot {
 }
 
 export interface DroppableProps {
+  key: string;
   id: string;
   accept: string[];
   horizontal?: boolean;

@@ -26,7 +26,11 @@ const useGlobalOnDrop = () => {
 };
 
 const useDroppableContext = (droppableId: string) => {
-  return useContext(STORE.droppables[droppableId].context);
+  const data = STORE.droppables[droppableId];
+  if (!data) {
+    throw new Error("no context found for the following id: " + droppableId);
+  }
+  return useContext(data.context);
 };
 
 const DndCtxProvider = ONDROP_CTX.Provider;
