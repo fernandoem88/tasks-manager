@@ -35,10 +35,12 @@ export const BoardHeader = ({
   };
 
   const handleCloseBoardsList = () => setIsBoardsListOpen(false);
+
   const handleSelect = (id: string, event: any) => {
     event.stopPropagation();
     event.preventDefault();
     onSelect(id);
+    setIsBoardsListOpen(false);
   };
 
   return (

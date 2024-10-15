@@ -39,8 +39,8 @@ export const ColumnForm = ({
         <Root>
           <UiAlert>
             <UiTypography variant="body1">
-              please digit the column name in the text field below and click on
-              confirm to send your request
+              Please enter the column name in the text field below and click
+              "Confirm" to submit your request.
             </UiTypography>
           </UiAlert>
           <UiTextField

@@ -10,7 +10,7 @@ export const BoardAlertMessage = ({ onNewColumn }: Props) => (
   <div>
     <UiAlert>
       <MessageWrapper>
-        Please add some columns to this board
+        Please add columns to the board.
         <UiButton variant="contained" color="primary" onClick={onNewColumn}>
           +
         </UiButton>
