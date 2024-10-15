@@ -1,5 +1,6 @@
 import type { ChangeEvent } from "react";
 import { Input, Root } from "./styled";
+import { UiTypography } from "../Typography";
 
 interface Props {
   placeholder?: string;
@@ -23,7 +24,7 @@ export const UiTextField = ({
 }: Props) => {
   return (
     <Root>
-      {!!label && <span>{label}</span>}
+      {!!label && <UiTypography variant="body1">{label}</UiTypography>}
       <Input
         isTextArea={isTextArea}
         placeholder={placeholder}

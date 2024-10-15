@@ -14,9 +14,9 @@ export const FONT_SIZES = {
   caption: "10px",
   body1: "15px",
   body2: "12px",
-  h1: "32px",
+  h6: "18px",
   h2: "28px",
-  h6: "24px",
+  h1: "32px",
 } as const;
 
 export const PALETTE = {
@@ -24,16 +24,17 @@ export const PALETTE = {
     100: "#f4f4f4",
     200: "#d4d4d4",
     300: "#c4c4c4",
+    400: "#e7e7e7",
   },
   primary: {
     main: "#3a86ff",
-    light: "#bb6dd1",
-    dark: "#471c98",
+    light: "#eef5ff",
+    dark: "#204d94",
   },
   secondary: {
     main: "#e3a730",
     light: "#ffcc39",
-    dark: "#a66d24",
+    dark: "#4c3b24",
   },
   warning: {
     main: "#e76632",
