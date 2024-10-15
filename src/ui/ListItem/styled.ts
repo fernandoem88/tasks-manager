@@ -1,15 +1,13 @@
 import { FONT_SIZES, PALETTE } from "@/ui/theme";
 import styled, { css } from "styled-components";
 
-export const Root = styled.div.withConfig({
-  shouldForwardProp: (prop) => !["divider"].includes(prop),
-})<{ divider?: boolean; isSelected?: boolean }>`
+export const Root = styled.div<{ $divider?: boolean; $isSelected?: boolean }>`
   width: 100%;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  color: ${(p) => (p.isSelected ? PALETTE.primary.main : "#444")};
+  color: ${(p) => (p.$isSelected ? PALETTE.primary.main : "#444")};
   transition: background-color 0.3s;
   cursor: pointer;
   &:hover {
@@ -17,7 +15,7 @@ export const Root = styled.div.withConfig({
   }
 
   ${(p) => {
-    if (!p.divider) return "";
+    if (!p.$divider) return "";
     return css`
       border-bottom: solid 1px ${PALETTE.grey["200"]};
     `;

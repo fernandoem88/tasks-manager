@@ -17,7 +17,7 @@ export const UiListItem = ({
   onClick,
 }: Props) => {
   return (
-    <Root as={as} divider={divider} onClick={onClick} isSelected={isSelected}>
+    <Root as={as} $divider={divider} onClick={onClick} $isSelected={isSelected}>
       <Primary>{children}</Primary>
     </Root>
   );

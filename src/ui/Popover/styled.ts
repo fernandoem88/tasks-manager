@@ -10,10 +10,10 @@ export const Backdrop = styled.div`
   z-index: 100;
 `;
 
-export const PopoverRoot = styled.div<{ top: number; left: number }>`
+export const PopoverRoot = styled.div<{ $top: number; $left: number }>`
   position: absolute;
-  top: ${(p) => p.top}px;
-  left: ${(p) => p.left}px;
+  top: ${(p) => p.$top}px;
+  left: ${(p) => p.$left}px;
   background-color: white;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
   border-radius: 4px;

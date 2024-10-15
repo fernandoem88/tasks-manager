@@ -13,6 +13,7 @@ interface Props {
   selectedId?: string;
   onNewBoard?: () => void;
   onNewColumn?: () => void;
+  onEditBoard?: () => void;
 }
 
 export const BoardHeader = ({
@@ -22,11 +23,12 @@ export const BoardHeader = ({
   onNewBoard,
   onNewColumn,
   getBoard,
+  onEditBoard,
 }: Props) => {
   const popoverAnchorRef = useRef(null);
   const [isBoardsListOpen, setIsBoardsListOpen] = useState(false);
-  const selected = selectedId ? getBoard(selectedId) : undefined;
-  const boardName = selected?.name ?? "--";
+  const selectedBoard = selectedId ? getBoard(selectedId) : undefined;
+  const boardName = selectedBoard?.name ?? "???";
   const hasManyBoards = boards.length > 1;
 
   const handleOpenBoardsList = () => {
@@ -48,9 +50,7 @@ export const BoardHeader = ({
         color="primary"
         variant="contained"
         rounded
-        onClick={() => {
-          // edit
-        }}
+        onClick={onEditBoard}
         size="sm"
       >
         <UiPencilIcon />

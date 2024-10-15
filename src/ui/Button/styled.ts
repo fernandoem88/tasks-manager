@@ -52,7 +52,7 @@ export const Root = styled.button.withConfig({
       height: 16px;
     `}
   border-radius: ${(p) => (p.rounded ? "50%" : "4px")};
-  box-shadow: ${(p) => (p.noElevation ? "none" : "2px 2px 8px #ccc")};
+  box-shadow: ${(p) => (p.noElevation ? "none" : "2px 2px 8px #4444")};
   transition: 0.2s;
   cursor: pointer;
   &:disabled {

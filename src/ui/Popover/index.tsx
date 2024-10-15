@@ -21,8 +21,8 @@ export const UiPopover = ({
   return (
     <Backdrop onClick={onClose}>
       <PopoverRoot
-        top={top + height + 8}
-        left={left}
+        $top={top + height + 8}
+        $left={left}
         onClick={(e) => e.stopPropagation()}
       >
         {children}

@@ -25,7 +25,7 @@ export const TaskCard = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const lastHystory = task.history[task.history.length - 1];
 
-  const lastDate = DateTime.fromISO(lastHystory);
+  const lastDate = DateTime.fromISO(lastHystory).setLocale("en");
   const movedOn = lastDate.toFormat("DD");
 
   const diff = lastDate

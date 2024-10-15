@@ -5,7 +5,9 @@ interface CardProps {
   width: string | Partial<Record<Breakpoint, string>>;
 }
 
-export const CarouselRoot = styled.div<{ gap?: string }>`
+export const CarouselRoot = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["gap"].includes(prop),
+})<{ gap?: string }>`
   display: block;
   white-space: nowrap;
   overflow-x: scroll;
@@ -18,9 +20,9 @@ export const CarouselRoot = styled.div<{ gap?: string }>`
     margin-left: ${(p) => p.gap || "0px"};
   }
 
-  &::-webkit-scrollbar {
+  /* &::-webkit-scrollbar {
     display: none;
-  }
+  } */
 `;
 
 const getWidth = (width: CardProps["width"]) => {

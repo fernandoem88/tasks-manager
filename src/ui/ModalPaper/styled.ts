@@ -34,6 +34,9 @@ export const ModalDialog = styled.section<{ open: boolean }>`
   transform: translateY(${(p) => (p.open ? "0" : "-20px")});
   opacity: ${(p) => (p.open ? "1" : "0")};
   transition: transform 0.3s ease, opacity 0.3s ease;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  overflow: hidden;
+  max-height: calc(100vh - 64px);
+  grid-template-areas: "modal-header" "modal-content" "modal-footer";
+  grid-template-rows: auto 1fr auto;
 `;

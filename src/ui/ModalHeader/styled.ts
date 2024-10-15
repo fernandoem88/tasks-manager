@@ -10,6 +10,7 @@ export const Root = styled.header`
   background-color: white;
   z-index: 1;
   padding: 12px 16px;
+  grid-area: modal-header;
 `;
 
 export const Headline = styled.div`

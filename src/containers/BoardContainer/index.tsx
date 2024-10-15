@@ -3,7 +3,6 @@
 import { BoardHeader } from "@/components/BoardHeader";
 import { useState } from "react";
 import { Root, BoardContent } from "./styled";
-import { useCarousel } from "@/ui/Carousel/hooks/useCarousel";
 import { UiCarousel } from "@/ui/Carousel";
 import { useAppState } from "@/contexts/AppStateProvider";
 import { EmptyBoard } from "@/components/EmptyBoard";
@@ -12,78 +11,99 @@ import { BoardForm } from "@/components/BoardCreatorForm";
 import { useDispatch } from "@/contexts/AppStateProvider/hooks/useDispatch";
 import { BoardColumnContainer } from "../BoardColumnContainer";
 import { ColumnForm } from "@/components/ColumnForm";
+import { UiAlert } from "@/ui/Alert";
 
 export const BoardContainer = () => {
+  const dispatch = useDispatch();
   const { boards } = useAppState();
+  const boardIds = Object.keys(boards);
+  const [isBoardEditMode, setIsBoardEditMode] = useState(false);
   const [isBoardCreatorOpen, setIsBoardCreatorOpen] = useState(false);
   const [isColumnCreatorOpen, setIsColumnCreatorOpen] = useState(false);
-  const dispatch = useDispatch();
-  const [selectedId, setSelectedId] = useState("");
-  const { anchorRef, isNextDisabled, isPreviousDisabled, navigation } =
-    useCarousel();
+  const [selectedBoardId, setSelectedBoardId] = useState(boardIds[0] ?? "");
 
-  const selectedBoard = boards[selectedId];
+  const selectedBoard = boards[selectedBoardId];
 
   const handleCreateBoard = (name: string) => {
-    const newState = dispatch("newBoard", name);
+    if (isBoardEditMode) return handleEditBoard(name);
 
+    const newState = dispatch("newBoard", name);
     setIsBoardCreatorOpen(false);
 
     const boardIds = Object.keys(newState?.boards ?? {});
     const isFirstBoard = boardIds.length === 1;
-
     if (!isFirstBoard) return;
+    setSelectedBoardId(boardIds[0]);
+  };
 
-    setSelectedId(boardIds[0]);
+  const handleEditBoard = (name: string) => {
+    dispatch("editBoardName", { id: selectedBoardId, name });
+    setIsBoardCreatorOpen(false);
+    setIsBoardEditMode(false);
+  };
+
+  const handleCloseBoardCreator = () => {
+    setIsBoardCreatorOpen(false);
+    setIsBoardEditMode(false);
   };
 
   const handleCreateColumn = (name: string) => {
     if (!selectedBoard) return;
-    dispatch("newBoardColumn", { boardId: selectedId, columnName: name });
+    dispatch("newBoardColumn", { boardId: selectedBoardId, columnName: name });
     setIsColumnCreatorOpen(false);
   };
 
+  const hasColumns = !!selectedBoard?.columnIds.length;
+  const hasBoards = !!boardIds.length;
+
   return (
     <Root>
-      {!selectedBoard && (
+      {!hasBoards && (
         <EmptyBoard onCreate={() => setIsBoardCreatorOpen(true)} />
       )}
 
-      {!!selectedBoard && (
+      {hasBoards && (
         <>
           <BoardHeader
-            selectedId={selectedId}
-            boards={Object.keys(boards)}
+            selectedId={selectedBoardId}
+            boards={boardIds}
             getBoard={(boardId) => boards[boardId]}
-            onSelect={setSelectedId}
+            onSelect={setSelectedBoardId}
             onNewBoard={() => setIsBoardCreatorOpen(true)}
             onNewColumn={() => setIsColumnCreatorOpen(true)}
+            onEditBoard={() => {
+              setIsBoardCreatorOpen(true);
+              setIsBoardEditMode(true);
+            }}
           />
           <BoardContent>
-            {/* <CarouselActions
-              onNext={navigation.next}
-              onPrevious={navigation.prev}
-              isNextDisabled={isNextDisabled}
-              isPreviousDisabled={isPreviousDisabled}
-            /> */}
-            <UiCarousel gap="12px" ref={anchorRef}>
-              {selectedBoard?.columnIds.map((columnId) => {
-                return (
-                  <BoardColumnContainer key={columnId} columnId={columnId} />
-                );
-              })}
-            </UiCarousel>
+            {!hasColumns && (
+              <div>
+                <UiAlert>
+                  Please add some columns to this board by using the{" "}
+                  <strong>NEW COLUMN</strong> button
+                </UiAlert>
+              </div>
+            )}
+
+            {hasColumns && (
+              <UiCarousel gap="12px">
+                {selectedBoard?.columnIds.map((columnId) => {
+                  return (
+                    <BoardColumnContainer key={columnId} columnId={columnId} />
+                  );
+                })}
+              </UiCarousel>
+            )}
           </BoardContent>
         </>
       )}
 
-      <UiModalPaper
-        open={isBoardCreatorOpen}
-        onClose={() => setIsBoardCreatorOpen(false)}
-      >
+      <UiModalPaper open={isBoardCreatorOpen} onClose={handleCloseBoardCreator}>
         <BoardForm
+          initialName={isBoardEditMode ? selectedBoard?.name : undefined}
           onConfirm={handleCreateBoard}
-          onClose={() => setIsBoardCreatorOpen(false)}
+          onClose={handleCloseBoardCreator}
         />
       </UiModalPaper>
       {!!selectedBoard && (

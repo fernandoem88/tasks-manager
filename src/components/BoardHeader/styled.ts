@@ -1,4 +1,4 @@
-import { FONT_SIZES, PALETTE } from "@/ui/theme";
+import { FONT_SIZES } from "@/ui/theme";
 import styled from "styled-components";
 
 export const Root = styled.div`
@@ -6,6 +6,7 @@ export const Root = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-wrap: wrap;
 `;
 
 export const BoardName = styled.h1`

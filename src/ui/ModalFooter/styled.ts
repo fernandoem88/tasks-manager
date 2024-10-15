@@ -13,4 +13,5 @@ export const Root = styled.div`
   background-color: white;
   border-top: solid 1px ${PALETTE.grey[200]};
   z-index: 1;
+  grid-area: modal-footer;
 `;
