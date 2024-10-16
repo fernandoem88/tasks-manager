@@ -1,7 +1,6 @@
 import { UiButton } from "@/ui/Button";
 import { Header, Root } from "./styled";
 import { UiTypography } from "@/ui/Typography";
-import { TEXT } from "./constants";
 import { UiAlert } from "@/ui/Alert";
 
 interface Props {
@@ -16,7 +15,7 @@ export const EmptyBoard = ({ onCreate }: Props) => {
       </Header>
 
       <UiAlert>
-        <UiTypography>{TEXT}</UiTypography>
+        <UiTypography>Please Create a board to proceed.</UiTypography>
       </UiAlert>
 
       <UiButton
