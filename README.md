@@ -41,6 +41,7 @@ The important folders are located inside the main [**src**](./src) folder:
 - **[contexts](./src/contexts/)**: This folder contains global providers like `AppStateProvider` for managing global state.
 
 - **[lib](./src/lib/)**: Contains reusable libraries or utility components, such as [drag-and-drop](./src/lib/drag-and-drop/), designed for specific use cases.
+  the dnd code base was cloned from an npm package [I published](https://www.npmjs.com/package/react-nested-dnd) a couple of years ago.
 
 - **[ui](./src/ui/)**: Houses reusable UI components that ensure consistent styling across the project.
 

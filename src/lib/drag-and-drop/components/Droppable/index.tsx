@@ -2,8 +2,6 @@
 
 import React, {
   createContext,
-  type FC,
-  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -21,7 +19,7 @@ const onMouseOver = (e: any) => {
 
 const containerStyle = { transition: "height 0.3s" };
 
-export const Droppable: FC<DroppableProps> = (props) => {
+export const Droppable = (props: DroppableProps) => {
   const [threesholdIndex, setThreesholdIndex] = useState(-1);
   const [threesholdId, setThreesholdId] = useState("");
 
@@ -129,8 +127,6 @@ export const Droppable: FC<DroppableProps> = (props) => {
   const acceptRef = useRef(props.accept);
   acceptRef.current = props.accept;
 
-  const getAcceptTypes = useCallback(() => acceptRef.current, []);
-
   // create new context for the droppable zone
   const [dropContext] = useState(() => {
     const prevContext = STORE.droppables[props.id]?.context;
@@ -144,7 +140,7 @@ export const Droppable: FC<DroppableProps> = (props) => {
       threesholdId,
       isDropTarget,
       id: props.id,
-      getAcceptTypes,
+      getAcceptTypes: () => acceptRef.current,
     });
 
     STORE.droppables[props.id] = { context: newContext };
@@ -168,9 +164,9 @@ export const Droppable: FC<DroppableProps> = (props) => {
       threesholdId,
       isDropTarget,
       id: props.id,
-      getAcceptTypes,
+      getAcceptTypes: () => acceptRef.current,
     };
-  }, [threesholdId, threesholdIndex, isDropTarget, props.id, getAcceptTypes]);
+  }, [threesholdId, threesholdIndex, isDropTarget, props.id]);
 
   const placeholderSizeType = props.horizontal ? "width" : "height";
   const placeholderTransition = hasDraggedItem

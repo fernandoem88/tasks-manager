@@ -1,19 +1,11 @@
-import { type FC, useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-
-import type { DragItem, DraggableProps } from "./types";
-import { useDroppableContext, useGlobalOnDrop } from "../Provider";
+import type { DraggableProps, DragItem } from "./types";
+import { useDroppableContext } from "../Provider";
 import { getElementMargin, getTranslationStyle, handleHover } from "./utils";
-import type { DropResult } from "../Provider/types";
 
-const Draggable: FC<DraggableProps> = ({
-  onDrop,
-  children,
-  horizontal,
-  ...props
-}) => {
+const Draggable = ({ children, horizontal, ...props }: DraggableProps) => {
   const ref = useRef<any>();
-  const onGlobalDrop = useGlobalOnDrop();
 
   const {
     threesholdIndex,
@@ -61,39 +53,7 @@ const Draggable: FC<DraggableProps> = ({
   >({
     accept: getAcceptTypes(),
     collect(monitor) {
-      return {
-        // handlerId: monitor.getHandlerId(),
-        isOver: monitor.isOver(),
-      };
-    },
-
-    drop(_rect, monitor) {
-      const draggedItem = monitor.getItem() as DragItem;
-      if (!draggedItem) return;
-      if (monitor.didDrop()) return;
-
-      const isDropTarget = monitor.isOver({ shallow: true });
-      if (!isDropTarget) return;
-
-      const result: DropResult = {
-        source: {
-          index: draggedItem.index,
-          id: draggedItem.id,
-          droppableId: draggedItem.droppableId,
-        },
-        destination: {
-          index: props.index,
-          id: props.id,
-          droppableId: props.droppableId,
-        },
-        dropType: "combine",
-        sameSource: draggedItem.droppableId === props.droppableId,
-      };
-
-      onDrop?.(result);
-      onGlobalDrop?.(result);
-
-      return result as any;
+      return { isOver: monitor.isOver() };
     },
 
     hover(draggedItem, monitor) {
