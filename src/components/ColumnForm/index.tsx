@@ -28,6 +28,7 @@ export const ColumnForm = ({
     if (isConfirmDisabled) return;
     onConfirm(name);
   };
+  const caption = `Please enter the column name in the text field below and click "Confirm" to submit your request.`;
 
   return (
     <>
@@ -38,10 +39,7 @@ export const ColumnForm = ({
       <UiModalContent>
         <Root>
           <UiAlert>
-            <UiTypography variant="body1">
-              Please enter the column name in the text field below and click
-              "Confirm" to submit your request.
-            </UiTypography>
+            <UiTypography variant="body1">{caption}</UiTypography>
           </UiAlert>
           <UiTextField
             label="Column Name"

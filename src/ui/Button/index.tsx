@@ -9,20 +9,18 @@ interface Props extends ButtonRootProps {
   title?: string;
 }
 
-export const UiButton = forwardRef(
-  (
-    { children, onClick, disabled, ...props }: Props,
-    ref: ForwardedRef<any>
-  ) => {
-    return (
-      <Root
-        {...props}
-        disabled={disabled}
-        ref={ref}
-        onClick={disabled ? undefined : onClick}
-      >
-        {children}
-      </Root>
-    );
-  }
-);
+export const UiButton = forwardRef(function UiButtonWithRef(
+  { children, onClick, disabled, ...props }: Props,
+  ref: ForwardedRef<HTMLButtonElement | null>
+) {
+  return (
+    <Root
+      {...props}
+      disabled={disabled}
+      ref={ref}
+      onClick={disabled ? undefined : onClick}
+    >
+      {children}
+    </Root>
+  );
+});

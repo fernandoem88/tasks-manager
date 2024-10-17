@@ -1,7 +1,6 @@
 import { useAppState } from "@/contexts/AppStateProvider";
 import { UiModalPaper } from "@/ui/ModalPaper";
 import { useDispatch } from "@/contexts/AppStateProvider/hooks/useDispatch";
-
 import { ColumnForm } from "@/components/ColumnForm";
 
 interface Props {
@@ -10,6 +9,7 @@ interface Props {
   open: boolean;
   onClose: () => void;
 }
+
 export const ModalColumnCreatorContainer = ({
   columnId = "",
   open,

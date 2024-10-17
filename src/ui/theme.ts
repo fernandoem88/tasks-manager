@@ -43,23 +43,6 @@ export const PALETTE = {
   },
 } as const;
 
-// export const media = Object.entries(breakpoints).reduce(
-//   (acc, [label, breakpoint]) => {
-//     const mediaFunc: Media = (...args) => {
-//       if (label === "xs" || breakpoint.min === 0) {
-//         return css(...args);
-//       }
-//       return css`
-//         @media (min-width: ${breakpoint.min}px) {
-//           ${css(...args)}
-//         }
-//       `;
-//     };
-//     return { ...acc, [label]: mediaFunc };
-//   },
-//   {} as Record<Breakpoint, Media>
-// );
-
 export const MEDIA = {
   up: (key: Breakpoint) => {
     const { min } = BREAK_POINTS[key];

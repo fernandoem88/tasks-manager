@@ -10,7 +10,9 @@ export const EMPTY_APP_STATE: AppState = {
 };
 
 export const appStateContext = createContext<AppState>(EMPTY_APP_STATE);
-export const setAppStateContext = createContext((_state: AppState) => {});
+export const setAppStateContext = createContext<(state: AppState) => void>(
+  () => {}
+);
 
 export const useAppState = () => useContext(appStateContext);
 export const useSetAppState = () => useContext(setAppStateContext);
